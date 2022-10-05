@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -222,13 +221,8 @@ public class SellerDaoJDBC implements SellerDao {
 		obj.setName(rs.getString("Name"));
 		obj.setEmail(rs.getString("Email"));
 		obj.setBaseSalary(rs.getDouble("BaseSalary"));
-
-		String[] birthDateSplitted = rs.getString("BirthDate").split(" ");
-		LocalDate birthDate = LocalDate.parse(birthDateSplitted[0]);
-		obj.setBirthDate(birthDate);
-
+		obj.setBirthDate(new java.util.Date(rs.getTimestamp("BirthDate").getTime()));
 		obj.setDepartment(dep);
-
 		return obj;
 	}
 
